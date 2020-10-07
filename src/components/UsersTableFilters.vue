@@ -5,13 +5,13 @@
     </v-card-title>
 
     <v-card-actions class="flex-column">
-      <div class="d-flex ">
+      <div class="d-flex">
         <v-select
             v-model="chosenDepartments"
             :items="availableDepartments"
-            :disabled="!isDepartmentsFilterOn"
+            :disabled="isDepartmentsFilterOn === false"
             label="Dział"
-            style="width:60%"
+            class="box-width"
             chips multiple outlined
         />
         <v-btn @click="toggleDepartmentsFilter"
@@ -21,18 +21,18 @@
         </v-btn>
       </div>
 
-      <div class="d-flex justify-space-between" style="width:60%">
+      <div class="d-flex justify-space-between box-width">
         <v-text-field
             v-model="minSalary"
-            :disabled="!isSalaryFilterOn"
+            :disabled="isSalaryFilterOn === false"
             label="Minimalne wynagrodzenie"
-            type="number" step="50" minSalary="0"
+            type="number" step="50" min="0"
         />
         <v-text-field
             v-model="maxSalary"
-            :disabled="!isSalaryFilterOn"
+            :disabled="isSalaryFilterOn === false"
             label="Maksymalne wynagrodzenie"
-            type="number" step="50" minSalary="0"
+            type="number" step="50" min="0"
         />
         <v-btn
             @click="toggleSalaryFilter"
@@ -100,10 +100,13 @@ export default {
     }
   },
   methods: {
+    removeFilter(filter) {
+      arrayUtils.remove(this.filters, filter)
+    },
     toggleDepartmentsFilter() {
       if (this.isDepartmentsFilterOn) {
         this.isDepartmentsFilterOn = false
-        arrayUtils.remove(this.filters, this.departmentsFilter)
+        this.removeFilter(this.departmentsFilter)
       } else {
         this.isDepartmentsFilterOn = true
         this.filters.push(this.departmentsFilter)
@@ -112,7 +115,7 @@ export default {
     toggleSalaryFilter() {
       if (this.isSalaryFilterOn) {
         this.isSalaryFilterOn = false
-        arrayUtils.remove(this.filters, this.salaryFilter)
+        this.removeFilter(this.salaryFilter)
       } else {
         this.isSalaryFilterOn = true
         this.filters.push(this.salaryFilter)
@@ -128,5 +131,8 @@ export default {
 </script>
 
 <style scoped>
+.box-width {
+  width: 60%
+}
 
 </style>

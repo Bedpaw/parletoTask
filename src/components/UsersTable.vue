@@ -4,8 +4,7 @@
       <v-text-field
           v-model="search" label="Szukaj..."
           single-line clearable
-          class="px-4"
-          style="width: 200px"
+          class="px-4 search-field"
       />
       <v-data-table
           :items="filteredUsers"
@@ -75,5 +74,8 @@ export default {
 </script>
 
 <style scoped>
+.search-field {
+  width: 200px;
+}
 
 </style>

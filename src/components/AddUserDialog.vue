@@ -21,15 +21,16 @@
       <v-text-field
           v-model="name"
           :label="labels.name"
-          style="width: 50%"
+          class="box-width"
       />
       <v-text-field
           v-model="surname"
           :label="labels.surname"
-          style="width: 50%"
+          class="box-width"
+
       />
       <v-select
-          style="width:50%"
+          class="box-width"
           v-model="department"
           :items="availableDepartments"
           chips
@@ -42,12 +43,12 @@
           :label="labels.salary"
           type="number"
           step="100"
-          style="width: 50%"
+          class="box-width"
       />
       <v-text-field
           v-model="concurrency"
           :label="labels.concurrency"
-          style="width: 50%"
+          class="box-width"
       />
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -124,5 +125,7 @@ export default {
 </script>
 
 <style scoped>
-
+.box-width {
+  width: 50%;
+}
 </style>
