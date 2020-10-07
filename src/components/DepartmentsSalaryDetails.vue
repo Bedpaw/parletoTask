@@ -1,5 +1,5 @@
 <template>
-  <v-card class="d-flex flex-column align-center mt-8">
+  <v-card class="d-flex flex-column align-center">
     <v-card-title class="mb-8">
       Podsumowanie wynagrodzeń
     </v-card-title>
@@ -7,7 +7,9 @@
     <v-card-subtitle>
       Całkowite wynagrodzenia
     </v-card-subtitle>
-    <p>{{ salaryForAllDepartments | currency }}</p>
+    <v-card-text class="d-flex justify-center font-weight-bold">
+      {{ salaryForAllDepartments | toFixed2 | currency }}
+    </v-card-text>
 
     <v-card-subtitle>
       Wynagrodzenia z podziałem na działy
@@ -15,7 +17,7 @@
     <v-card-text class="d-flex flex-column align-center">
       <p v-for="(department, index) in salaryByDepartments"
          :key="department.name + index">
-        {{ department.name }} : {{ department.salary | currency }}
+        {{ department.name }} : {{ department.salary |toFixed2 | currency }}
       </p>
     </v-card-text>
   </v-card>
@@ -33,7 +35,8 @@ export default {
     }
   },
   filters: {
-    currency: (value) => value + ' PLN'
+    currency: (value) => value + ' PLN',
+    toFixed2: (value) => value.toFixed(2)
   },
   computed: {
     groupByDepartments() {

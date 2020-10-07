@@ -1,42 +1,45 @@
 <template>
-  <v-card class="mt-6">
+  <v-card>
     <v-card-title class="d-flex justify-center">
       Filtruj użytkowników
     </v-card-title>
 
     <v-card-actions class="flex-column">
-      <div class="d-flex">
+      <div class="d-flex flex-column flex-md-row box-width align-center">
         <v-select
             v-model="chosenDepartments"
             :items="availableDepartments"
             :disabled="isDepartmentsFilterOn === false"
             label="Dział"
-            class="box-width"
             chips multiple outlined
         />
         <v-btn @click="toggleDepartmentsFilter"
-               class="my-4 info"
+               class="my-4 ml-4 info"
         >
           {{ isDepartmentsFilterOn ? "Wyłącz" : "Włącz" }}
         </v-btn>
       </div>
 
-      <div class="d-flex justify-space-between box-width">
-        <v-text-field
-            v-model="minSalary"
-            :disabled="isSalaryFilterOn === false"
-            label="Minimalne wynagrodzenie"
-            type="number" step="50" min="0"
-        />
-        <v-text-field
-            v-model="maxSalary"
-            :disabled="isSalaryFilterOn === false"
-            label="Maksymalne wynagrodzenie"
-            type="number" step="50" min="0"
-        />
+      <div class="salary-filters-container flex-md-row box-width">
+        <div class="d-flex justify-space-between">
+          <v-text-field
+              v-model="minSalary"
+              :disabled="isSalaryFilterOn === false"
+              label="Minimalne wynagrodzenie"
+              type="number" step="50" min="0"
+              class="salary-input-width"
+          />
+          <v-text-field
+              v-model="maxSalary"
+              :disabled="isSalaryFilterOn === false"
+              label="Maksymalne wynagrodzenie"
+              type="number" step="50" min="0"
+              class="salary-input-width ml-6"
+          />
+        </div>
         <v-btn
             @click="toggleSalaryFilter"
-            class="my-4 info"
+            class="my-4 ml-4 info"
         >
           {{ isSalaryFilterOn ? "Wyłącz" : "Włącz" }}
         </v-btn>
@@ -132,7 +135,16 @@ export default {
 
 <style scoped>
 .box-width {
-  width: 60%
+  width: 60%;
+}
+.salary-input-width {
+  max-width: 60%;
+}
+.salary-filters-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 
 </style>
