@@ -30,7 +30,7 @@ export const tableHeaders = [
   },
   {
     text: 'Waluta',
-    value: 'concurrency',
+    value: 'currency',
     sortable: true
   },
 ]

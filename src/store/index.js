@@ -10,7 +10,7 @@ const translatedUsers = users.map(user => {
     surname: user.nazwisko,
     department: user.dzial,
     salary: user.wynagrodzenieKwota,
-    concurrency: user.wynagrodzenieWaluta
+    currency: user.wynagrodzenieWaluta
   }
 })
 const initialState = {
@@ -21,7 +21,8 @@ export default new Vuex.Store({
   state: initialState,
   getters: {
     getUsers: (state) => state.users,
-    getAllDepartments: (state) => [...new Set(state.users.map(user => user.department))]
+    getAllDepartments: (state) => [...new Set(state.users.map(user => user.department))],
+    getAllCurrency: state => [...new Set(state.users.map(user => user.currency))],
   },
   mutations: {
     "ADD_USER": ((state, payload) => state.users.push(payload)

@@ -1,5 +1,6 @@
 <template>
   <v-dialog
+      persistent
       v-model="dialog"
       max-width="500px"
   >
@@ -17,22 +18,30 @@
       <v-card-title>
         Dodaj nowego użytkownika
       </v-card-title>
-
+      <v-form
+          ref="form"
+          v-model="valid"
+          lazy-validation
+      >
       <v-text-field
           v-model="name"
           :label="labels.name"
-          class="box-width"
+          required
+          :rules="nameRules"
       />
       <v-text-field
           v-model="surname"
           :label="labels.surname"
-          class="box-width"
+          required
+          :rules="surnameRules"
+          class="mb-2"
 
       />
       <v-select
-          class="box-width"
           v-model="department"
           :items="availableDepartments"
+          :rules="[v => !!v || 'Wybór działu jest wymagany']"
+          required
           chips
           label="Dział"
           outlined
@@ -41,15 +50,19 @@
       <v-text-field
           v-model="salary"
           :label="labels.salary"
-          type="number"
-          step="100"
-          class="box-width"
+          :rules="salaryRules"
+          required
+          type="number" step="100" min="0"
       />
-      <v-text-field
-          v-model="concurrency"
-          :label="labels.concurrency"
-          class="box-width"
-      />
+        <v-select
+            v-model="currency"
+            :items="availableCurrency"
+            :rules="[v => !!v || 'Wybór waluty jest wymagany']"
+            required
+            chips
+            label="Dział"
+            outlined
+        />
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn
@@ -62,11 +75,12 @@
         <v-btn
             color="blue darken-1"
             text
-            @click="save"
+            @click="validate()"
         >
           Dodaj
         </v-btn>
       </v-card-actions>
+      </v-form>
     </v-card>
   </v-dialog>
 </template>
@@ -82,6 +96,10 @@ export default {
     availableDepartments: {
       type: Array,
       required: true,
+    },
+    availableCurrency: {
+      type: Array,
+      required: true,
     }
   },
   data: () => ({
@@ -89,14 +107,27 @@ export default {
     surname: '',
     department: '',
     salary: 2000,
-    concurrency: 'PLN',
+    currency: 'PLN',
     labels: {
       name: 'Imię',
       surname: 'Nazwisko',
       department: 'Dział',
       salary: 'Wynagrodzenie',
-      concurrency: 'Waluta'
-    }
+      currency: 'Waluta'
+    },
+    valid: false,
+    nameRules: [
+      v => !!v || 'Imię jest wymagane',
+      v => (v && v.length > 2) || 'Imię musi być dłuższe niż 2 znaki',
+    ],
+    surnameRules: [
+      v => !!v || 'Nazwisko jest wymagane',
+      v => (v && v.length > 2) || 'Nazwisko musi być dłuższe niż 2 znaki',
+    ],
+    salaryRules: [
+      v => !!v || 'Wybór pensji jest wymagany',
+      v => (v && v > 0) || 'Pensja nie może być niższa niż 0',
+    ]
   }),
   methods: {
     clearUserForm() {
@@ -104,10 +135,13 @@ export default {
       this.surname = ''
       this.department = ''
       this.salary = 2000
-      this.concurrency = 'PLN'
+      this.currency = 'PLN'
     },
     toggleDialog() {
       this.$emit('toggle_dialog')
+    },
+    validate () {
+      if(this.$refs.form.validate()) this.save()
     },
     save() {
       const newUser = {
@@ -115,7 +149,7 @@ export default {
           surname: this.surname,
           department: this.department,
           salary: this.salary,
-          concurrency: this.concurrency
+          currency: this.currency
         }
       this.$emit('add_user', newUser)
       this.clearUserForm()

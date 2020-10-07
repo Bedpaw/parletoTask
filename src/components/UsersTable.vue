@@ -17,6 +17,7 @@
               <div class="d-flex justify-end mr-4">
                 <add-user-dialog
                     :available-departments="getAllDepartments"
+                    :available-currency="getAllCurrency"
                     :dialog="dialog"
                     @toggle_dialog="dialog = !dialog"
                     @add_user="addUser"
@@ -68,7 +69,7 @@ export default {
     search: '',
   }),
   computed: {
-    ...mapGetters(["getUsers", "getAllDepartments"])
+    ...mapGetters(["getUsers", "getAllDepartments", "getAllCurrency"])
   },
   methods: {
     ...mapMutations(["ADD_USER"]),
