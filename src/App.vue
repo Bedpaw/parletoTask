@@ -10,15 +10,14 @@
 
 <script>
 import UsersTable from "@/components/UsersTable";
+
 export default {
   name: 'App',
 
   components: {
     UsersTable
-    },
+  },
 
-  data: () => ({
-    //
-  }),
+
 };
 </script>

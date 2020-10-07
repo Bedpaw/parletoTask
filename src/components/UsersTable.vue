@@ -1,10 +1,11 @@
 <template>
   <div>
     <v-card>
-      <v-text-field v-model="search" label="Szukaj..."
-                    single-line clearable
-                    class="px-4"
-                    style="width: 200px"
+      <v-text-field
+          v-model="search" label="Szukaj..."
+          single-line clearable
+          class="px-4"
+          style="width: 200px"
       />
       <v-data-table
           :items="filteredUsers"
@@ -46,6 +47,7 @@ import DepartmentsSalaryDetails from "@/components/DepartmentsSalaryDetails";
 import UsersTableFilters from "@/components/UsersTableFilters";
 import AddUserDialog from "@/components/AddUserDialog";
 import {mapGetters, mapMutations} from "vuex"
+
 export default {
   name: "usersTable",
   components: {AddUserDialog, UsersTableFilters, DepartmentsSalaryDetails},

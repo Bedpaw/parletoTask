@@ -1,5 +1,5 @@
 const groupBy =
-  function(data, key) {
+  function (data, key) {
     return data.reduce((storage, item) => {
       let group = item[key];
 
@@ -9,9 +9,9 @@ const groupBy =
     }, {});
   };
 
-const sumByKey = function (data, key){
+const sumByKey = function (data, key) {
   return data.map(item => item[key])
-              .reduce((total, curr) => total + parseFloat(curr), 0)
+    .reduce((total, curr) => total + parseFloat(curr), 0)
 }
 const remove = function (data, item) {
   const index = data.indexOf(item);

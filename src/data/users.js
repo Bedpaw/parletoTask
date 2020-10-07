@@ -9,28 +9,28 @@ export const users = [
 export const tableHeaders = [
   {
     text: 'Imię',
-    value: 'imie',
+    value: 'name',
     sortable: true,
     filterable: true
   },
   {
     text: 'Nazwisko',
-    value: 'nazwisko',
+    value: 'surname',
     sortable: true,
   },
   {
     text: 'Dział',
-    value: 'dzial',
+    value: 'department',
     sortable: true,
   },
   {
     text: 'Wynagrodzenie',
-    value: 'wynagrodzenieKwota',
+    value: 'salary',
     sortable: true,
   },
   {
     text: 'Waluta',
-    value: 'wynagrodzenieWaluta',
+    value: 'concurrency',
     sortable: true
   },
 ]

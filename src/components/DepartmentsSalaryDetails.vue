@@ -37,7 +37,7 @@ export default {
   },
   computed: {
     groupByDepartments() {
-      return arrayUtils.groupBy(this.users, 'dzial')
+      return arrayUtils.groupBy(this.users, 'department')
     },
     salaryByDepartments() {
       const salaryByDepartments = []
@@ -45,14 +45,14 @@ export default {
       for (const [key, value] of Object.entries(this.groupByDepartments)) {
         salaryByDepartments.push({
           name: key,
-          salary: arrayUtils.sumByKey(value, 'wynagrodzenieKwota')
+          salary: arrayUtils.sumByKey(value, 'salary')
         })
       }
       return salaryByDepartments
     },
     salaryForAllDepartments() {
       return this.users
-          .map(user => user.wynagrodzenieKwota)
+          .map(user => user.salary)
           .reduce((total, curr) => total + parseFloat(curr), 0)
     },
   }

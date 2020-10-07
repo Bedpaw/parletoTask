@@ -16,8 +16,8 @@
         />
         <v-btn @click="toggleDepartmentsFilter"
                class="my-4 info"
-               >
-          {{isDepartmentsFilterOn ? "Wyłącz" : "Włącz"}}
+        >
+          {{ isDepartmentsFilterOn ? "Wyłącz" : "Włącz" }}
         </v-btn>
       </div>
 
@@ -75,17 +75,18 @@ export default {
       chosenDepartments: [...this.availableDepartments],
       minSalary: 1000,
       maxSalary: 5000,
-    }},
+    }
+  },
   created() {
     this.$emit('users_filtered', this.getFilteredUsers)
   },
   computed: {
     salaryFilter() {
-      return (user) => this.minSalary <= parseFloat(user.wynagrodzenieKwota) &&
-          this.maxSalary >= parseFloat(user.wynagrodzenieKwota)
+      return (user) => this.minSalary <= parseFloat(user.salary) &&
+          this.maxSalary >= parseFloat(user.salary)
     },
     departmentsFilter() {
-      return (user) => this.chosenDepartments.includes(user.dzial)
+      return (user) => this.chosenDepartments.includes(user.department)
     },
     getFilteredUsers() {
       return this.users
@@ -100,7 +101,7 @@ export default {
   },
   methods: {
     toggleDepartmentsFilter() {
-      if(this.isDepartmentsFilterOn) {
+      if (this.isDepartmentsFilterOn) {
         this.isDepartmentsFilterOn = false
         arrayUtils.remove(this.filters, this.departmentsFilter)
       } else {
@@ -109,7 +110,7 @@ export default {
       }
     },
     toggleSalaryFilter() {
-      if(this.isSalaryFilterOn) {
+      if (this.isSalaryFilterOn) {
         this.isSalaryFilterOn = false
         arrayUtils.remove(this.filters, this.salaryFilter)
       } else {

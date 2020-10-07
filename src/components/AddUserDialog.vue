@@ -6,8 +6,7 @@
     <template v-slot:activator="{ attrs }">
       <v-btn
           color="primary"
-          dark
-          class="mb-2"
+          dark class="mb-2"
           v-bind="attrs"
           @click="toggleDialog"
       >
@@ -22,14 +21,12 @@
       <v-text-field
           v-model="name"
           :label="labels.name"
-          required
           style="width: 50%"
       />
       <v-text-field
           v-model="surname"
           :label="labels.surname"
           style="width: 50%"
-          required
       />
       <v-select
           style="width:50%"
@@ -46,13 +43,11 @@
           type="number"
           step="100"
           style="width: 50%"
-          required
       />
       <v-text-field
           v-model="concurrency"
           :label="labels.concurrency"
           style="width: 50%"
-          required
       />
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -115,11 +110,11 @@ export default {
     },
     save() {
       const newUser = {
-          imie: this.name,
-          nazwisko: this.surname,
-          dzial: this.department,
-          wynagrodzenieKwota: this.salary,
-          wynagrodzenieWaluta: this.concurrency
+          name: this.name,
+          surname: this.surname,
+          department: this.department,
+          salary: this.salary,
+          concurrency: this.concurrency
         }
       this.$emit('add_user', newUser)
       this.clearUserForm()
