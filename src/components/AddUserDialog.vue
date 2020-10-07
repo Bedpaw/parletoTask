@@ -23,63 +23,64 @@
           v-model="valid"
           lazy-validation
       >
-      <v-text-field
-          v-model="name"
-          :label="labels.name"
-          required
-          :rules="nameRules"
-      />
-      <v-text-field
-          v-model="surname"
-          :label="labels.surname"
-          required
-          :rules="surnameRules"
-          class="mb-2"
+        <v-text-field
+            v-model="name"
+            :label="labels.name"
+            :rules="nameRules"
+            required
+        />
+        <v-text-field
+            v-model="surname"
+            :label="labels.surname"
+            :rules="surnameRules"
+            required
 
-      />
-      <v-select
-          v-model="department"
-          :items="availableDepartments"
-          :rules="[v => !!v || 'Wybór działu jest wymagany']"
-          required
-          chips
-          label="Dział"
-          outlined
-      />
+        />
+        <v-select
+            v-model="department"
+            :items="availableDepartments"
+            :rules="[v => !!v || 'Wybór działu jest wymagany']"
+            required
+            label="Dział"
+            class="mt-2"
+            chips
+            outlined
+        />
 
-      <v-text-field
-          v-model="salary"
-          :label="labels.salary"
-          :rules="salaryRules"
-          required
-          type="number" step="100" min="0"
-      />
+        <v-text-field
+            v-model="salary"
+            :label="labels.salary"
+            :rules="salaryRules"
+            required
+            type="number" step="100" min="0"
+        />
         <v-select
             v-model="currency"
             :items="availableCurrency"
             :rules="[v => !!v || 'Wybór waluty jest wymagany']"
             required
-            chips
             label="Dział"
+            class="mt-2"
+            chips
             outlined
         />
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn
-            color="blue darken-1"
-            text
-            @click="toggleDialog"
-        >
-          Cofnij
-        </v-btn>
-        <v-btn
-            color="blue darken-1"
-            text
-            @click="validate()"
-        >
-          Dodaj
-        </v-btn>
-      </v-card-actions>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+              class="warning"
+              text
+              @click="toggleDialog"
+          >
+            Cofnij
+          </v-btn>
+          <v-btn
+              class="success"
+              text
+              @click="validate()"
+          >
+            Dodaj
+          </v-btn>
+        </v-card-actions>
       </v-form>
     </v-card>
   </v-dialog>
@@ -138,28 +139,23 @@ export default {
       this.currency = 'PLN'
     },
     toggleDialog() {
+      this.clearUserForm()
       this.$emit('toggle_dialog')
     },
-    validate () {
-      if(this.$refs.form.validate()) this.save()
+    validate() {
+      if (this.$refs.form.validate()) this.save()
     },
     save() {
       const newUser = {
-          name: this.name,
-          surname: this.surname,
-          department: this.department,
-          salary: this.salary,
-          currency: this.currency
-        }
+        name: this.name,
+        surname: this.surname,
+        department: this.department,
+        salary: this.salary,
+        currency: this.currency
+      }
       this.$emit('add_user', newUser)
-      this.clearUserForm()
+      this.toggleDialog()
     }
   }
 }
 </script>
-
-<style scoped>
-.box-width {
-  width: 50%;
-}
-</style>

@@ -78,7 +78,6 @@ export default {
     },
     addUser(user) {
       this.ADD_USER(user)
-      this.dialog = false
     },
   }
 }
