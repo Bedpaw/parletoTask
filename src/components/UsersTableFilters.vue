@@ -7,7 +7,6 @@
     <v-card-actions class="flex-column">
       <div class="d-flex ">
         <v-select
-            @change="emitFilteredUsers()"
             v-model="chosenDepartments"
             :items="availableDepartments"
             :disabled="!isDepartmentsFilterOn"
@@ -24,14 +23,12 @@
 
       <div class="d-flex justify-space-between" style="width:60%">
         <v-text-field
-            @keyup="emitFilteredUsers()"
             v-model="minSalary"
             :disabled="!isSalaryFilterOn"
             label="Minimalne wynagrodzenie"
             type="number" step="50" minSalary="0"
         />
         <v-text-field
-            @keyup="emitFilteredUsers()"
             v-model="maxSalary"
             :disabled="!isSalaryFilterOn"
             label="Maksymalne wynagrodzenie"
@@ -70,7 +67,7 @@ export default {
       required: true,
     }
   },
-  data: function() {
+  data() {
     return {
       filters: [],
       isDepartmentsFilterOn: false,
@@ -80,12 +77,15 @@ export default {
       maxSalary: 5000,
     }},
   created() {
-    this.emitFilteredUsers()
+    this.$emit('users_filtered', this.getFilteredUsers)
   },
   computed: {
     salaryFilter() {
       return (user) => this.minSalary <= parseFloat(user.wynagrodzenieKwota) &&
           this.maxSalary >= parseFloat(user.wynagrodzenieKwota)
+    },
+    departmentsFilter() {
+      return (user) => this.chosenDepartments.includes(user.dzial)
     },
     getFilteredUsers() {
       return this.users
@@ -94,9 +94,9 @@ export default {
     }
   },
   watch: {
-    users: function () {
-      this.emitFilteredUsers()
-    },
+    getFilteredUsers() {
+      this.$emit('users_filtered', this.getFilteredUsers)
+    }
   },
   methods: {
     toggleDepartmentsFilter() {
@@ -107,8 +107,6 @@ export default {
         this.isDepartmentsFilterOn = true
         this.filters.push(this.departmentsFilter)
       }
-
-      this.emitFilteredUsers()
     },
     toggleSalaryFilter() {
       if(this.isSalaryFilterOn) {
@@ -118,21 +116,11 @@ export default {
         this.isSalaryFilterOn = true
         this.filters.push(this.salaryFilter)
       }
-
-      this.emitFilteredUsers()
-    },
-
-    emitFilteredUsers() {
-      this.$emit('users_filtered', this.getFilteredUsers)
-      },
-    departmentsFilter(user) {
-      return this.chosenDepartments.includes(user.dzial)
     },
     cleanFilters() {
       this.isDepartmentsFilterOn = false
       this.isSalaryFilterOn = false
       this.filters = []
-      this.emitFilteredUsers()
     },
   }
 }
